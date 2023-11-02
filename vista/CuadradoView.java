@@ -17,7 +17,7 @@ public class CuadradoView {
 
         cuadrado = new JLabel();
         cuadrado.setPreferredSize(new Dimension(50, 50));
-        cuadrado.setBackground(Color.BLUE);
+        cuadrado.setBackground(Color.RED);
         cuadrado.setOpaque(true);
         panel.add(cuadrado);
 

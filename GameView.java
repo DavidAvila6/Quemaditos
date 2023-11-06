@@ -29,19 +29,7 @@ public class GameView extends JFrame {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                int xServer = model.getXServer();
-                int yServer = model.getYServer();
-
-                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                    xServer -= 5;
-                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    xServer += 5;
-                } else if (e.getKeyCode() == KeyEvent.VK_UP) {
-                    yServer -= 5;
-                } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                    yServer += 5;
-                }
-                model.updateServerPosition(xServer, yServer);
+                model.moveServerPosition(e);
                 panel.repaint();
             }
         });

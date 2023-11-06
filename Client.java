@@ -20,25 +20,12 @@ public class Client {
             view.addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyPressed(KeyEvent e) {
-                    int xClient = model.getXClient();
-                    int yClient = model.getYClient();
-
-                    if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                        xClient -= 5;
-                    } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                        xClient += 5;
-                    } else if (e.getKeyCode() == KeyEvent.VK_UP) {
-                        yClient -= 5;
-                    } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                        yClient += 5;
-                    }
-
-                    model.updateClientPosition(xClient, yClient);
+                    model.moveClientPosition(e);
                     view.repaint();
 
                     try {
-                        serverOutput.writeInt(xClient);
-                        serverOutput.writeInt(yClient);
+                        serverOutput.writeInt(model.getXClient());
+                        serverOutput.writeInt(model.getYClient());
                         serverOutput.flush();
                     } catch (IOException ex) {
                         ex.printStackTrace();

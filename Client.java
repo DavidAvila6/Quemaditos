@@ -7,7 +7,6 @@ import java.net.*;
 
 public class Client {
     public static void main(String[] args) {
-        
         GameModel model = new GameModel();
         GameView view = new GameView(model);
         GameController controller = new GameController(model, view);
@@ -20,12 +19,15 @@ public class Client {
             view.addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyPressed(KeyEvent e) {
-                    model.moveClientPosition(e);
+                    int controlledClientIndex = model.getControlledClientIndex(); // Obtener el índice controlado desde el modelo
+                    
+                    model.moveClientPosition(controlledClientIndex, e);
                     view.repaint();
 
                     try {
-                        serverOutput.writeInt(model.getXClient());
-                        serverOutput.writeInt(model.getYClient());
+                        serverOutput.writeInt(controlledClientIndex);
+                        serverOutput.writeInt(model.getXClient(controlledClientIndex));
+                        serverOutput.writeInt(model.getYClient(controlledClientIndex));
                         serverOutput.flush();
                     } catch (IOException ex) {
                         ex.printStackTrace();
@@ -34,13 +36,17 @@ public class Client {
             });
 
             while (true) {
+                int controlledServerIndex = serverInput.readInt(); // Recibir el índice controlado
+                model.setControlledServerIndex(controlledServerIndex); // Actualizar el índice controlado en el modelo
                 int xServer = serverInput.readInt();
                 int yServer = serverInput.readInt();
-                model.updateServerPosition(xServer, yServer);
+                model.updateServerPosition(controlledServerIndex, xServer, yServer);
                 view.repaint();
 
-                int xClient = model.getXClient();
-                int yClient = model.getYClient();
+                int controlledClientIndex = model.getControlledClientIndex(); // Obtener el índice controlado desde el modelo
+                int xClient = model.getXClient(controlledClientIndex);
+                int yClient = model.getYClient(controlledClientIndex);
+                serverOutput.writeInt(controlledClientIndex);
                 serverOutput.writeInt(xClient);
                 serverOutput.writeInt(yClient);
                 serverOutput.flush();
@@ -49,7 +55,7 @@ public class Client {
             e.printStackTrace();
         }
 
-        view.setSize(400, 400);
+        view.setSize(900, 400);
         view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         view.setVisible(true);
     }

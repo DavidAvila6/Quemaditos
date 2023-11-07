@@ -24,6 +24,9 @@ public class Personaje {
     public Color getColor() {
         return color;
     }
+    public void setColor(Color color) {
+        this.color= color;
+    }
 
     public boolean isActivo() {
         return activo;

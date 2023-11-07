@@ -9,6 +9,8 @@ public class Client {
     public static void main(String[] args) {
         GameModel model = new GameModel();
         GameView view = new GameView(model);
+        view.setTitle("Client");
+
         GameController controller = new GameController(model, view);
 
         try {
@@ -40,6 +42,7 @@ public class Client {
                 model.setControlledServerIndex(controlledServerIndex); // Actualizar el índice controlado en el modelo
                 int xServer = serverInput.readInt();
                 int yServer = serverInput.readInt();
+                
                 model.updateServerPosition(controlledServerIndex, xServer, yServer);
                 view.repaint();
 

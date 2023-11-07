@@ -9,6 +9,7 @@ public class Server {
     public static void main(String[] args) {
         GameModel model = new GameModel();
         GameView view = new GameView(model);
+        view.setTitle("Server");
         GameController controller = new GameController(model, view);
 
         try {
@@ -21,7 +22,23 @@ public class Server {
 
                 DataOutputStream clientOutput = new DataOutputStream(clientSocket.getOutputStream());
                 DataInputStream clientInput = new DataInputStream(clientSocket.getInputStream());
-
+                view.addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        int controlledServerIndex = model.getControlledServerIndex(); // Obtener el índice controlado desde el modelo
+                        model.moveServerPosition(controlledServerIndex,e);
+                        view.repaint();
+    
+                        try {
+                            clientOutput.writeInt(controlledServerIndex);
+                            clientOutput.writeInt(model.getXClient(controlledServerIndex));
+                            clientOutput.writeInt(model.getYClient(controlledServerIndex));
+                            clientOutput.flush();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
                  // Índice del personaje controlado por el cliente
 
 
@@ -31,6 +48,7 @@ public class Server {
                     model.setControlledClientIndex(controlledClientIndex); // Recibe el índice controlado por el cliente
                     int xClient = clientInput.readInt();
                     int yClient = clientInput.readInt();
+
                     model.updateClientPosition(controlledClientIndex, xClient, yClient);
                     view.repaint();
 
@@ -46,8 +64,7 @@ public class Server {
             e.printStackTrace();
         }
 
-        view.setSize(900, 400);
-        view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        view.setVisible(true);
+        
+        
     }
 }

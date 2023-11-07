@@ -110,6 +110,12 @@ public class GameModel {
                 yClient -= 5;
             } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                 yClient += 5;
+            } else if (e.getKeyChar() == 'e') {
+                if (clientPersonajes.get(index).getColor()!=Color.PINK) {
+                    clientPersonajes.get(index).setColor(Color.PINK);
+                } else {
+                    clientPersonajes.get(index).setColor(Color.BLUE);
+                }
             }
 
             updateClientPosition(index, xClient, yClient);
@@ -129,8 +135,13 @@ public class GameModel {
                 yServer -= 5;
             } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                 yServer += 5;
+            } else if (e.getKeyChar() == 'e') {
+                if (serverPersonajes.get(index).getColor()!=Color.ORANGE) {
+                    serverPersonajes.get(index).setColor(Color.ORANGE);
+                } else {
+                    serverPersonajes.get(index).setColor(Color.RED);
+                }
             }
-
             updateServerPosition(index, xServer, yServer);
         }
     }

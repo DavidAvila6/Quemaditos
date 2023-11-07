@@ -47,7 +47,6 @@ public class GameView extends JFrame {
                     model.setControlledServerIndex(newControlledIndex);
                     numberLabel.setText("Controlled Index : " + newControlledIndex); // Actualizamos el índice en el JLabel
                 }
-                model.moveServerPosition(model.getControlledServerIndex(), e);
                 panel.repaint();
             }
         });

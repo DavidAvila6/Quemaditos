@@ -1,38 +1,59 @@
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 public class GameModel {
+    private Personaje sP; //Server Personaje
+    private Personaje cP; //Client Personajes
+    private int currentNumber = 0;
+
+    public GameModel() {
+        sP = new Personaje(50, 50, Color.RED,true);
+        cP = new Personaje(200, 200, Color.BLUE,true);
+    }
     
-    private int xServer = 50, yServer = 50;
-    private int xClient = 200, yClient = 200;
-    
+    public Personaje getServerPersonaje() {
+        return sP;
+    }
+
+    public Personaje getClientPersonaje() {
+        return cP;
+    }
+
+    public int getCurrentNumber() {
+        return currentNumber;
+    }
+
+    public void setCurrentNumber(int number) {
+        currentNumber = number;
+    }
 
     public int getXServer() {
-        return xServer;
+        return sP.getX();
     }
 
     public int getYServer() {
-        return yServer;
+        return sP.getY();
     }
 
     public int getXClient() {
-        return xClient;
+        return cP.getX();
     }
 
     public int getYClient() {
-        return yClient;
+        return cP.getY();
     }
 
     public void updateServerPosition(int x, int y) {
-        xServer = x;
-        yServer = y;
+        sP.setX(x);
+        sP.setY(y);
     }
 
     public void updateClientPosition(int x, int y) {
-        xClient = x;
-        yClient = y;
+        cP.setX(x);
+        cP.setY(y);
     }
     public void moveClientPosition(KeyEvent e) {
-        int xClient = getXClient();
-                    int yClient = getYClient();
+                    int xClient = cP.getX();
+                    int yClient = cP.getY();
 
                     if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                         xClient -= 5;
@@ -47,8 +68,9 @@ public class GameModel {
                     updateClientPosition(xClient, yClient);
     }
     public void moveServerPosition(KeyEvent e) {
-        int xServer = getXServer();
-        int yServer =getYServer();
+        
+        int xServer = sP.getX();
+        int yServer = sP.getY();
 
             if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                     xServer -= 5;

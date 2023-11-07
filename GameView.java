@@ -45,7 +45,7 @@ public class GameView extends JFrame {
                     int newControlledIndex = Character.getNumericValue(keyPressed);
                     model.setControlledClientIndex(newControlledIndex); // Actualizamos el índice en el JLabel
                     model.setControlledServerIndex(newControlledIndex);
-                    numberLabel.setText("Controlled Index Server: " + newControlledIndex); // Actualizamos el índice en el JLabel
+                    numberLabel.setText("Controlled Index : " + newControlledIndex); // Actualizamos el índice en el JLabel
                 }
                 model.moveServerPosition(model.getControlledServerIndex(), e);
                 panel.repaint();

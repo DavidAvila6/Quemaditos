@@ -15,15 +15,29 @@ public class GameModel {
         serverPersonajes = new ArrayList<>();
         clientPersonajes = new ArrayList<>();
 
-        // Agrega 6 personajes del servidor a la derecha
-        for (int i = 0; i < 6; i++) {
-            serverPersonajes.add(new Personaje(50 + i * 60, 50, Color.RED, true));
-        }
+    // Ajusta la separación entre las tablas de personajes
+    int separationX = 50;
 
-        // Agrega 6 personajes del cliente a la izquierda
-        for (int i = 0; i < 6; i++) {
-            clientPersonajes.add(new Personaje(200 + i * 60, 200, Color.BLUE, true));
+    // Agrega 3 filas y 2 columnas de personajes del servidor a la izquierda
+    for (int row = 0; row < 3; row++) {
+        for (int col = 0; col < 2; col++) {
+            int x = 50 + col * 100 + separationX;
+            int y = 50 + row * 130;
+            serverPersonajes.add(new Personaje(x, y, Color.RED, true));
         }
+    }
+
+    // Ajusta la posición inicial de los personajes azules
+    int startingX = 500;
+
+    // Agrega 3 filas y 2 columnas de personajes del cliente a la derecha
+    for (int row = 0; row < 3; row++) {
+        for (int col = 0; col < 2; col++) {
+            int x = startingX + col * 100;
+            int y = 50 + row * 130;
+            clientPersonajes.add(new Personaje(x, y, Color.BLUE, true));
+        }
+    }
     }
 
     public List<Personaje> getServerPersonajes() {

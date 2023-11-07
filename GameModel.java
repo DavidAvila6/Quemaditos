@@ -118,7 +118,6 @@ public class GameModel {
 
     public void moveServerPosition(int index, KeyEvent e) {
         if (index >= 0 && index < serverPersonajes.size()) {
-            System.out.println(index);
             int xServer = serverPersonajes.get(index).getX();
             int yServer = serverPersonajes.get(index).getY();
 

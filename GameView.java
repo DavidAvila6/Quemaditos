@@ -15,6 +15,8 @@ public class GameView extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
+
+                // Dibuja los personajes
                 for (Personaje personaje : model.getServerPersonajes()) {
                     g.setColor(personaje.getColor());
                     g.fillRect(personaje.getX(), personaje.getY(), 50, 50);
@@ -23,6 +25,11 @@ public class GameView extends JFrame {
                     g.setColor(personaje.getColor());
                     g.fillRect(personaje.getX(), personaje.getY(), 50, 50);
                 }
+
+                // Dibuja las bolas
+                
+                model.drawBalls(g);
+                
             }
         };
 
@@ -45,7 +52,7 @@ public class GameView extends JFrame {
                     int newControlledIndex = Character.getNumericValue(keyPressed);
                     model.setControlledClientIndex(newControlledIndex); // Actualizamos el índice en el JLabel
                     model.setControlledServerIndex(newControlledIndex);
-                    numberLabel.setText("Controlled Index : " + newControlledIndex); // Actualizamos el índice en el JLabel
+                    numberLabel.setText("Controlled Index: " + newControlledIndex); // Actualizamos el índice en el JLabel
                 }
                 panel.repaint();
             }

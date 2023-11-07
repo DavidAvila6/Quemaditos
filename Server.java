@@ -42,7 +42,7 @@ public class Server {
                  // Índice del personaje controlado por el cliente
 
 
-                while (true) {
+                while (true) { //Toda esta parte se envia y se recibe datos del Servidor
                     int controlledServerIndex = model.getControlledServerIndex();
                     int controlledClientIndex = clientInput.readInt();
                     model.setControlledClientIndex(controlledClientIndex); // Recibe el índice controlado por el cliente
@@ -50,6 +50,8 @@ public class Server {
                     int yClient = clientInput.readInt();
 
                     model.updateClientPosition(controlledClientIndex, xClient, yClient);
+                    model.updateBalls();
+                    
                     view.repaint();
 
                     int xServer = model.getXServer(controlledServerIndex);

@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +7,7 @@ import java.util.List;
 public class GameModel {
     private List<Personaje> serverPersonajes;
     private List<Personaje> clientPersonajes;
+    private List<Ball> balls;
     private int currentNumber = 0;
 
     private int controlledClientIndex = 0;
@@ -14,6 +16,8 @@ public class GameModel {
     public GameModel() {
         serverPersonajes = new ArrayList<>();
         clientPersonajes = new ArrayList<>();
+        balls = new ArrayList<>();
+        balls.add(new Ball(450, 200, 1, 1, 20, Color.GREEN, 900, 400));
 
     // Ajusta la separación entre las tablas de personajes
     int separationX = 50;
@@ -28,7 +32,7 @@ public class GameModel {
     }
 
     // Ajusta la posición inicial de los personajes azules
-    int startingX = 500;
+    int startingX = 650;
 
     // Agrega 3 filas y 2 columnas de personajes del cliente a la derecha
     for (int row = 0; row < 3; row++) {
@@ -98,6 +102,8 @@ public class GameModel {
         }
     }
 
+    
+
     public void moveClientPosition(int index, KeyEvent e) {
         if (index >= 0 && index < clientPersonajes.size()) {
             int xClient = clientPersonajes.get(index).getX();
@@ -161,5 +167,40 @@ public class GameModel {
         controlledServerIndex = index;
         
     }
-       
+
+    public void updateBalls() {
+        for (Ball ball : balls) {
+            ball.move();
+        // Detecta los bordes y hace que la bola rebote
+        if (ball.getX() < 0 || ball.getX() > ball.getMaxX() - ball.getSize()) {
+            ball.setSpeedX(-ball.getSpeedX());
+        }
+        if (ball.getY() < 0 || ball.getY() > ball.getMaxY() - ball.getSize()) {
+            ball.setSpeedY(-ball.getSpeedY());
+        }
+        }
+    }
+
+    public void drawBalls(Graphics g) {
+        for (Ball ball : balls) {
+            ball.draw(g);
+        }
+    }
+
+    public int getXBalls(int index) {
+        if (index >= 0 && index < balls.size()) {
+            return balls.get(index).getX();
+        }
+        return -1; // Manejar el caso de índice no válido
+    }
+
+    public int getYballs(int index) {
+        if (index >= 0 && index < balls.size()) {
+            return balls.get(index).getY();
+        }
+        return -1; // Manejar el caso de índice no válido
+    }
+
 }
+       
+

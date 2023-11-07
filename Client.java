@@ -44,6 +44,7 @@ public class Client {
                 int yServer = serverInput.readInt();
                 
                 model.updateServerPosition(controlledServerIndex, xServer, yServer);
+                model.updateBalls();
                 view.repaint();
 
                 int controlledClientIndex = model.getControlledClientIndex(); // Obtener el índice controlado desde el modelo

@@ -89,8 +89,6 @@ public class Ball {
     public void move() {
         x += speedX;
         y += speedY;
-        System.out.println(x);
-        System.out.println(y);
     }
 
     public void draw(Graphics g) {

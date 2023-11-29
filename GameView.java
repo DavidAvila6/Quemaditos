@@ -5,35 +5,32 @@ import java.awt.event.KeyEvent;
 
 public class GameView extends JFrame {
     private JPanel panel;
-    private GameModel model;
     private JLabel numberLabel; // Agregamos un JLabel para mostrar el número
 
     public GameView(GameModel model) {
-        this.model = model;
-
         panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
 
                 // Dibuja los personajes
-                for (Personaje personaje : model.getServerPersonajes()) {
+                for (Personaje personaje : PersonajeModel.getServerPersonajes()) {
                     g.setColor(personaje.getColor());
                     g.fillRect(personaje.getX(), personaje.getY(), 50, 50);
                 }
-                for (Personaje personaje : model.getClientPersonajes()) {
+                for (Personaje personaje : PersonajeModel.getClientPersonajes()) {
                     g.setColor(personaje.getColor());
                     g.fillRect(personaje.getX(), personaje.getY(), 50, 50);
                 }
 
                 // Dibuja las bolas
-                
-                model.drawBalls(g);
-                
+
+                BallModel.drawBalls(g);
+
             }
         };
 
-        numberLabel = new JLabel("Controlled Index: " + model.getControlledClientIndex());
+        numberLabel = new JLabel("Controlled Index: " + PersonajeModel.getControlledClientIndex());
         numberLabel.setFont(new Font("Arial", Font.PLAIN, 18));
         numberLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -50,9 +47,10 @@ public class GameView extends JFrame {
                 char keyPressed = e.getKeyChar();
                 if (Character.isDigit(keyPressed)) {
                     int newControlledIndex = Character.getNumericValue(keyPressed);
-                    model.setControlledClientIndex(newControlledIndex); // Actualizamos el índice en el JLabel
-                    model.setControlledServerIndex(newControlledIndex);
-                    numberLabel.setText("Controlled Index: " + newControlledIndex); // Actualizamos el índice en el JLabel
+                    PersonajeModel.setControlledClientIndex(newControlledIndex); // Actualizamos el índice en el JLabel
+                    PersonajeModel.setControlledServerIndex(newControlledIndex);
+                    numberLabel.setText("Controlled Index: " + newControlledIndex); // Actualizamos el índice en el
+                                                                                    // JLabel
                 }
                 panel.repaint();
             }

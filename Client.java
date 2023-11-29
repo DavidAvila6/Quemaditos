@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.*;
@@ -11,49 +10,55 @@ public class Client {
         GameView view = new GameView(model);
         view.setTitle("Client");
 
-        GameController controller = new GameController(model, view);
-
         try {
-            Socket socket = new Socket("localhost", 12345);
-            DataOutputStream serverOutput = new DataOutputStream(socket.getOutputStream());
-            DataInputStream serverInput = new DataInputStream(socket.getInputStream());
+            try (Socket socket = new Socket("localhost", 12345)) {
+                DataOutputStream serverOutput = new DataOutputStream(socket.getOutputStream());
+                DataInputStream serverInput = new DataInputStream(socket.getInputStream());
 
-            view.addKeyListener(new KeyAdapter() {
-                @Override
-                public void keyPressed(KeyEvent e) {
-                    int controlledClientIndex = model.getControlledClientIndex(); // Obtener el índice controlado desde el modelo
-                    
-                    model.moveClientPosition(controlledClientIndex, e);
+                view.addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        int controlledClientIndex = PersonajeModel.getControlledClientIndex(); // Obtener el índice
+                                                                                               // controlado desde
+                        // el modelo
+
+                        PersonajeModel.moveClientPosition(controlledClientIndex, e);
+                        view.repaint();
+
+                        try {
+                            serverOutput.writeInt(controlledClientIndex);
+                            serverOutput.writeInt(PersonajeModel.getXClient(controlledClientIndex));
+                            serverOutput.writeInt(PersonajeModel.getYClient(controlledClientIndex));
+                            serverOutput.flush();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
+
+                while (true) {
+                    int controlledServerIndex = serverInput.readInt(); // Recibir el índice controlado
+                    PersonajeModel.setControlledServerIndex(controlledServerIndex); // Actualizar el índice controlado
+                                                                                    // en el
+                                                                                    // modelo
+                    int xServer = serverInput.readInt();
+                    int yServer = serverInput.readInt();
+
+                    PersonajeModel.updateServerPosition(controlledServerIndex, xServer, yServer);
+                    BallModel.updateBalls();
                     view.repaint();
 
-                    try {
-                        serverOutput.writeInt(controlledClientIndex);
-                        serverOutput.writeInt(model.getXClient(controlledClientIndex));
-                        serverOutput.writeInt(model.getYClient(controlledClientIndex));
-                        serverOutput.flush();
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
+                    int controlledClientIndex = PersonajeModel.getControlledClientIndex(); // Obtener el índice
+                                                                                           // controlado
+                                                                                           // desde el
+                    // modelo
+                    int xClient = PersonajeModel.getXClient(controlledClientIndex);
+                    int yClient = PersonajeModel.getYClient(controlledClientIndex);
+                    serverOutput.writeInt(controlledClientIndex);
+                    serverOutput.writeInt(xClient);
+                    serverOutput.writeInt(yClient);
+                    serverOutput.flush();
                 }
-            });
-
-            while (true) {
-                int controlledServerIndex = serverInput.readInt(); // Recibir el índice controlado
-                model.setControlledServerIndex(controlledServerIndex); // Actualizar el índice controlado en el modelo
-                int xServer = serverInput.readInt();
-                int yServer = serverInput.readInt();
-                
-                model.updateServerPosition(controlledServerIndex, xServer, yServer);
-                model.updateBalls();
-                view.repaint();
-
-                int controlledClientIndex = model.getControlledClientIndex(); // Obtener el índice controlado desde el modelo
-                int xClient = model.getXClient(controlledClientIndex);
-                int yClient = model.getYClient(controlledClientIndex);
-                serverOutput.writeInt(controlledClientIndex);
-                serverOutput.writeInt(xClient);
-                serverOutput.writeInt(yClient);
-                serverOutput.flush();
             }
         } catch (IOException e) {
             e.printStackTrace();

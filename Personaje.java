@@ -5,12 +5,14 @@ public class Personaje {
     private int y;
     private Color color;
     private boolean activo;
+    private boolean agarraBola;
 
     public Personaje(int x, int y, Color color, boolean activo) {
         this.x = x;
         this.y = y;
         this.color = color;
         this.activo = true; // Por defecto, el personaje está activo
+        this.agarraBola = false;
     }
 
     public int getX() {
@@ -42,5 +44,15 @@ public class Personaje {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    //metodso para las saber estado de coger bolas
+    
+    public boolean isAgarraBola() {
+        return agarraBola;
+    }
+
+    public void setAgarraBola(boolean agarraBola) {
+        this.agarraBola = agarraBola;
     }
 }

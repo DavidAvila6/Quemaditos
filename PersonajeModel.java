@@ -85,6 +85,7 @@ public class PersonajeModel {
             } else if (e.getKeyChar() == 'e') {
                 if (clientPersonajes.get(index).getColor() != Color.PINK) {
                     clientPersonajes.get(index).setColor(Color.PINK);
+                    
                 } else {
                     clientPersonajes.get(index).setColor(Color.BLUE);
                 }
@@ -110,6 +111,7 @@ public class PersonajeModel {
             } else if (e.getKeyChar() == 'e') {
                 if (serverPersonajes.get(index).getColor() != Color.ORANGE) {
                     serverPersonajes.get(index).setColor(Color.ORANGE);
+                    System.out.println("HOLA");
                 } else {
                     serverPersonajes.get(index).setColor(Color.RED);
                 }

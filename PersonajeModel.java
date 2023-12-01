@@ -12,6 +12,9 @@ public class PersonajeModel {
     private static int controlledClientIndex = 0;
     private static int controlledServerIndex = 0;
 
+    // Ruta de la imagen del personaje
+
+
     public static List<Personaje> getServerPersonajes() {
         return serverPersonajes;
     }
@@ -31,6 +34,7 @@ public class PersonajeModel {
     public static void clearClientSockets() {
         clientSockets.clear();
     }
+    
 
     public static int getXServer(int index) {
         if (index >= 0 && index < serverPersonajes.size()) {
@@ -87,13 +91,7 @@ public class PersonajeModel {
             } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                 yClient += 5;
             } else if (e.getKeyChar() == 'e') {
-                if (clientPersonajes.get(index).getColor() != Color.PINK) {
-                    clientPersonajes.get(index).setColor(Color.PINK);
-                    clientPersonajes.get(index).setAgarraBola(true);
-                } else {
-                    clientPersonajes.get(index).setColor(Color.BLUE);
-                    clientPersonajes.get(index).setAgarraBola(false);
-                }
+                
             }
 
             updateClientPosition(index, xClient, yClient);
@@ -114,13 +112,7 @@ public class PersonajeModel {
             } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                 yServer += 5;
             } else if (e.getKeyChar() == 'e') {
-                if (serverPersonajes.get(index).getColor() != Color.ORANGE) {
-                    serverPersonajes.get(index).setColor(Color.ORANGE);
-                    clientPersonajes.get(index).setAgarraBola(true);
-                } else {
-                    serverPersonajes.get(index).setColor(Color.RED);
-                    clientPersonajes.get(index).setAgarraBola(false);
-                }
+               
             }
             updateServerPosition(index, xServer, yServer);
         }

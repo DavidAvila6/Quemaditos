@@ -1,4 +1,5 @@
-import java.awt.*;
+import javax.swing.*;
+import java.awt.Color;
 
 public class Personaje {
     private int x;
@@ -6,12 +7,13 @@ public class Personaje {
     private Color color;
     private boolean activo;
     private boolean agarraBola;
+    private ImageIcon image;
 
-    public Personaje(int x, int y, Color color, boolean activo) {
+    public Personaje(int x, int y, ImageIcon image, boolean activo) {
         this.x = x;
         this.y = y;
-        this.color = color;
-        this.activo = true; // Por defecto, el personaje está activo
+        this.image = image;
+        this.activo = activo;
         this.agarraBola = false;
     }
 
@@ -19,15 +21,24 @@ public class Personaje {
         return x;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
     public int getY() {
         return y;
     }
 
-    public Color getColor() {
-        return color;
+    public void setY(int y) {
+        this.y = y;
     }
-    public void setColor(Color color) {
-        this.color= color;
+
+    public ImageIcon getImage() {
+        return image;
+    }
+
+    public void setImage(ImageIcon image) {
+        this.image = image;
     }
 
     public boolean isActivo() {
@@ -38,16 +49,6 @@ public class Personaje {
         this.activo = activo;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    //metodso para las saber estado de coger bolas
-    
     public boolean isAgarraBola() {
         return agarraBola;
     }

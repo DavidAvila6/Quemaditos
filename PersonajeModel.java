@@ -9,7 +9,6 @@ public class PersonajeModel implements Observer {
     private static List<Personaje> clientPersonajes = new ArrayList<>();
     private static List<Observer> observers = new ArrayList<>();
 
-    private int currentNumber = 0;
     private static List<Socket> clientSockets = new ArrayList<>();
 
     private static int controlledClientIndex = 0;
@@ -26,10 +25,9 @@ public class PersonajeModel implements Observer {
     }
 
     public static void agregarPersonaje(Personaje personaje) {
-        // Add the personaje
+
         serverPersonajes.add(personaje);
 
-        // Notify observers about the change
         notifyObservers();
     }
 

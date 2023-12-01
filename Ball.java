@@ -1,40 +1,44 @@
-import java.awt.Color;
-import java.awt.Graphics;
+import javax.swing.*;
+import java.awt.*;
 
 public class Ball {
-    private int x;
-    private int y;
+    private double x;
+    private double y;
     private double speedX;
     private double speedY;
     private int size;
-    private Color color;
+    private ImageIcon image;
     private int maxX;
     private int maxY;
+    private boolean agarrada;
+    private double speed;
 
-    public Ball(int x, int y, double speedX, double speedY, int size, Color color, int maxX, int maxY) {
+    public Ball(double x, double y, double speedX, double speedY, int size, ImageIcon image, int maxX, int maxY) {
         this.x = x;
         this.y = y;
         this.speedX = speedX;
         this.speedY = speedY;
         this.size = size;
-        this.color = color;
+        this.image = image;
         this.maxX = maxX;
         this.maxY = maxY;
+        this.agarrada = false;
+        this.speed = 0.9991;
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY(double y) {
         this.y = y;
     }
 
@@ -62,12 +66,12 @@ public class Ball {
         this.size = size;
     }
 
-    public Color getColor() {
-        return color;
+    public ImageIcon getImage() {
+        return image;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
+    public void setImage(ImageIcon image) {
+        this.image = image;
     }
 
     public int getMaxX() {
@@ -92,7 +96,32 @@ public class Ball {
     }
 
     public void draw(Graphics g) {
-        g.setColor(color);
-        g.fillOval(x, y, size, size);
+        Image img = image.getImage();
+        g.drawImage(img, (int) x, (int) y, size, size, null);
+    }
+
+    public boolean isAgarrada() {
+        return agarrada;
+    }
+
+    public void setAgarrada(boolean agarrada) {
+        this.agarrada = agarrada;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public void updateSpeed() {
+        System.out.println(speedX + "INCIIAL");
+        System.out.println(speedY + "INCIIAL");
+        this.speedX *= speed;
+        this.speedY *= speed;
+        System.out.println(speedX + "FINAL");
+        System.out.println(speedY + "FINAL");
     }
 }

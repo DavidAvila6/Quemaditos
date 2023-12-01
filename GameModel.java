@@ -1,5 +1,7 @@
 import java.awt.Color;
 
+import javax.swing.ImageIcon;
+
 public class GameModel implements Observer {
     BallModel model = new BallModel();
     PersonajeModel model2 = new PersonajeModel();
@@ -13,7 +15,7 @@ public class GameModel implements Observer {
             for (int col = 0; col < 2; col++) {
                 int x = 50 + col * 100 + separationX;
                 int y = 50 + row * 130;
-                PersonajeModel.getServerPersonajes().add(new Personaje(x, y, Color.RED, true));
+                PersonajeModel.getServerPersonajes().add(new Personaje(x, y, new ImageIcon("sprites/ser.gif"), true));
 
                 // En algún lugar donde creas o modificas personajes
                 Personaje personaje = new Personaje(y, y, null, false/* parámetros */);
@@ -42,7 +44,7 @@ public class GameModel implements Observer {
             for (int col = 0; col < 2; col++) {
                 int x = startingX + col * 100;
                 int y = 50 + row * 130;
-                PersonajeModel.getClientPersonajes().add(new Personaje(x, y, Color.BLUE, true));
+                PersonajeModel.getClientPersonajes().add(new Personaje(x, y, new ImageIcon("sprites/pika.gif"), true));
             }
         }
 

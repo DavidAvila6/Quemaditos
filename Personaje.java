@@ -1,4 +1,5 @@
-import java.awt.*;
+import javax.swing.*;
+import java.awt.Color;
 
 public class Personaje {
     private int x;
@@ -6,12 +7,13 @@ public class Personaje {
     private Color color;
     private boolean activo;
     private boolean agarraBola;
+    private ImageIcon image;
 
-    public Personaje(int x, int y, Color color, boolean activo) {
+    public Personaje(int x, int y, ImageIcon image, boolean activo) {
         this.x = x;
         this.y = y;
-        this.color = color;
-        this.activo = true; // Por defecto, el personaje está activo
+        this.image = image;
+        this.activo = activo;
         this.agarraBola = false;
     }
 
@@ -45,6 +47,14 @@ public class Personaje {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public ImageIcon getImage() {
+        return image;
+    }
+
+    public void setImage(ImageIcon image) {
+        this.image = image;
     }
 
     private MovimientoEstrategia estrategia;

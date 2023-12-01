@@ -5,6 +5,8 @@ import java.util.List;
 
 public class BallModel {
     private static List<Ball> balls;
+    static List<Personaje> serverPersonajes = PersonajeModel.getServerPersonajes();
+    static List<Personaje> clientPersonajes = PersonajeModel.getClientPersonajes();
     
 
     // Imágenes para las bolas
@@ -40,8 +42,7 @@ public class BallModel {
 
     public static void checkCollisions() {
         List<Ball> balls = getBalls();
-        List<Personaje> serverPersonajes = PersonajeModel.getServerPersonajes();
-        List<Personaje> clientPersonajes = PersonajeModel.getClientPersonajes();
+        
 
         for (Ball ball : balls) {
             for (Personaje personaje : serverPersonajes) {
@@ -68,19 +69,17 @@ public class BallModel {
 
     private static void handleCollision(Ball ball, Personaje personaje) {
         
-        // Lógica para manejar la colisión, por ejemplo, cambiar el color del personaje o hacer algo más
-        //
+        
         if(ball.getSpeedX()<0.05){
             
         }else{
             eliminado(personaje);
         }
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        
     }
 
     public static void eliminado(Personaje p){
-    List<Personaje> serverPersonajes = PersonajeModel.getServerPersonajes();
-    List<Personaje> clientPersonajes = PersonajeModel.getClientPersonajes();
+    
         if (serverPersonajes.contains(p)) {
             serverPersonajes.remove(p);
         }  
@@ -90,6 +89,11 @@ public class BallModel {
     }
 
         //**************** */
+
+
+    public void ballAgarrada(){
+
+    }
 
     public static List<Ball> getBalls() {
         return balls;

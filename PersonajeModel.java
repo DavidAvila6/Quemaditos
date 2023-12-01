@@ -87,7 +87,7 @@ public class PersonajeModel {
             } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                 yClient += 5;
             } else if (e.getKeyChar() == 'e') {
-                
+                clientPersonajes.get(index).setAgarraBola(true);
             }
 
             updateClientPosition(index, xClient, yClient);
@@ -108,7 +108,8 @@ public class PersonajeModel {
             } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                 yServer += 5;
             } else if (e.getKeyChar() == 'e') {
-               
+                serverPersonajes.get(index).setAgarraBola(true);    
+                          
             }
             updateServerPosition(index, xServer, yServer);
         }

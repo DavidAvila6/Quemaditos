@@ -85,9 +85,10 @@ public class PersonajeModel {
             } else if (e.getKeyChar() == 'e') {
                 if (clientPersonajes.get(index).getColor() != Color.PINK) {
                     clientPersonajes.get(index).setColor(Color.PINK);
-                    
+                    clientPersonajes.get(index).setAgarraBola(true);
                 } else {
                     clientPersonajes.get(index).setColor(Color.BLUE);
+                    clientPersonajes.get(index).setAgarraBola(false);
                 }
             }
 
@@ -111,9 +112,10 @@ public class PersonajeModel {
             } else if (e.getKeyChar() == 'e') {
                 if (serverPersonajes.get(index).getColor() != Color.ORANGE) {
                     serverPersonajes.get(index).setColor(Color.ORANGE);
-                    System.out.println("HOLA");
+                    clientPersonajes.get(index).setAgarraBola(true);
                 } else {
                     serverPersonajes.get(index).setColor(Color.RED);
+                    clientPersonajes.get(index).setAgarraBola(false);
                 }
             }
             updateServerPosition(index, xServer, yServer);

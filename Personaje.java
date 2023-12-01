@@ -5,6 +5,8 @@ public class Personaje {
     private int y;
     private Color color;
     private boolean activo;
+    public static String charimageS = "sprites/ser.gif";
+    public static String charimageC = "sprites/pika.gif";
 
     public Personaje(int x, int y, Color color, boolean activo) {
         this.x = x;

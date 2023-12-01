@@ -1,14 +1,17 @@
-import java.awt.Color;
-import java.awt.Graphics;
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BallModel {
     private static List<Ball> balls;
 
+    // Imágenes para las bolas
+    private static ImageIcon ballImage = new ImageIcon("sprites/pokeball.gif"); // Cambia la ruta según tu imagen
+
     public BallModel() {
         balls = new ArrayList<>();
-        balls.add(new Ball(450, 200, 1, 1, 20, Color.GREEN, 900, 400));
+        balls.add(new Ball(450, 200, 1, 1, 20, ballImage, 900, 400));
     }
 
     public static void updateBalls() {

@@ -5,7 +5,12 @@ import java.awt.event.KeyEvent;
 
 public class GameView extends JFrame {
     private JPanel panel;
-    private JLabel numberLabel; // Agregamos un JLabel para mostrar el número
+    private JLabel numberLabel;
+
+    // Ruta de la imagen de fondo
+    private String backgroundImagePath = "sprites\\fondo2.png";// Cambia el nombre y la extensión según tu imagen
+
+    
 
     public GameView(GameModel model) {
         panel = new JPanel() {
@@ -13,20 +18,28 @@ public class GameView extends JFrame {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
 
-                // Dibuja los personajes
+                // Dibuja el fondo de imagen
+                Image backgroundImage = new ImageIcon(backgroundImagePath).getImage();
+                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+
+                // Dibuja los personajes con imágenes
                 for (Personaje personaje : PersonajeModel.getServerPersonajes()) {
-                    g.setColor(personaje.getColor());
-                    g.fillRect(personaje.getX(), personaje.getY(), 50, 50);
+                   
+                    Image characterImage = new ImageIcon( personaje.charimageS).getImage();
+                    drawImage(g, characterImage, personaje.getX(), personaje.getY());
                 }
                 for (Personaje personaje : PersonajeModel.getClientPersonajes()) {
-                    g.setColor(personaje.getColor());
-                    g.fillRect(personaje.getX(), personaje.getY(), 50, 50);
+                    Image characterImage = new ImageIcon(personaje.charimageC).getImage();
+                    drawImage(g, characterImage, personaje.getX(), personaje.getY());
                 }
 
                 // Dibuja las bolas
-
                 BallModel.drawBalls(g);
+            }
 
+            // Método auxiliar para dibujar una imagen
+            private void drawImage(Graphics g, Image image, int x, int y) {
+                g.drawImage(image, x, y, 50, 50, this);
             }
         };
 
@@ -37,7 +50,7 @@ public class GameView extends JFrame {
         add(panel, BorderLayout.CENTER);
         add(numberLabel, BorderLayout.SOUTH);
 
-        setSize(900, 450); // Aumentamos la altura para dar espacio al JLabel
+        setSize(900, 450);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
 
@@ -47,13 +60,16 @@ public class GameView extends JFrame {
                 char keyPressed = e.getKeyChar();
                 if (Character.isDigit(keyPressed)) {
                     int newControlledIndex = Character.getNumericValue(keyPressed);
-                    PersonajeModel.setControlledClientIndex(newControlledIndex); // Actualizamos el índice en el JLabel
+                    PersonajeModel.setControlledClientIndex(newControlledIndex);
                     PersonajeModel.setControlledServerIndex(newControlledIndex);
-                    numberLabel.setText("Controlled Index: " + newControlledIndex); // Actualizamos el índice en el
-                                                                                    // JLabel
+                    numberLabel.setText("Controlled Index: " + newControlledIndex);
                 }
                 panel.repaint();
             }
         });
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new GameView(new GameModel()));
     }
 }

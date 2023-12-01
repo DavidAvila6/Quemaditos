@@ -12,6 +12,11 @@ public class PersonajeModel {
     private static int controlledClientIndex = 0;
     private static int controlledServerIndex = 0;
 
+    // Ruta de la imagen del personaje
+    private String charimageS = "sprites/ser.gif";
+    private String charimageC = "sprites/pika.gif";
+
+
     public static List<Personaje> getServerPersonajes() {
         return serverPersonajes;
     }
@@ -27,6 +32,7 @@ public class PersonajeModel {
     public void setCurrentNumber(int number) {
         currentNumber = number;
     }
+    
 
     public static int getXServer(int index) {
         if (index >= 0 && index < serverPersonajes.size()) {

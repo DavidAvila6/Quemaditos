@@ -14,6 +14,23 @@ public class GameModel implements Observer {
                 int x = 50 + col * 100 + separationX;
                 int y = 50 + row * 130;
                 PersonajeModel.getServerPersonajes().add(new Personaje(x, y, Color.RED, true));
+
+                // En algún lugar donde creas o modificas personajes
+                Personaje personaje = new Personaje(y, y, null, false/* parámetros */);
+
+                // Asigna una estrategia de movimiento (por ejemplo, MoverDerecha)
+                personaje.setEstrategia(new MovimientoEstrategia.MoverDerecha());
+                personaje.mover();
+
+                personaje.setEstrategia(new MovimientoEstrategia.MoverIzquierda());
+                personaje.mover();
+
+                personaje.setEstrategia(new MovimientoEstrategia.MoverArriba());
+                personaje.mover();
+
+                personaje.setEstrategia(new MovimientoEstrategia.MoverAbajo());
+                personaje.mover();
+
             }
         }
 

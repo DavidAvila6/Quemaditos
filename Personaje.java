@@ -24,8 +24,9 @@ public class Personaje {
     public Color getColor() {
         return color;
     }
+
     public void setColor(Color color) {
-        this.color= color;
+        this.color = color;
     }
 
     public boolean isActivo() {
@@ -42,5 +43,17 @@ public class Personaje {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    private MovimientoEstrategia estrategia;
+
+    public void setEstrategia(MovimientoEstrategia estrategia) {
+        this.estrategia = estrategia;
+    }
+
+    public void mover() {
+        if (estrategia != null) {
+            estrategia.mover(this);
+        }
     }
 }

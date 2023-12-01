@@ -73,6 +73,12 @@ public class BallModel {
             }else{
                 ball.setX(p.getX());
                 ball.setY(p.getY());
+                if (p.isLanzar()){
+                    ball.setSpeedX(-ball.getSpeedX());
+                    ball.setSpeed(0.9991);
+                    p.setAgarraBola(false);
+                    
+                }
             }
          
     }
@@ -80,13 +86,17 @@ public class BallModel {
     public static void eliminado(Personaje p){
         ImageIcon imageIcon;
         if (serverPersonajes.contains(p)) {
-            if (!p.isAgarraBola()){
-                imageIcon = new ImageIcon("sprites\\pokeball.gif");
-                p.setImage(imageIcon);
-                p.setX(-2000);
+            
+                if (!p.isAgarraBola()){
+                    if (!p.isLanzar()){
+                        imageIcon = new ImageIcon("sprites\\pokeball.gif");
+                            p.setImage(imageIcon);
+                            p.setX(-2000);
+                    }else{
+                        p.setLanzar(false);
             }
             
-        }  
+        }}  
         if (clientPersonajes.contains(p)) {
             if (!p.isAgarraBola()){
                 imageIcon = new ImageIcon("sprites\\pokeball.gif");

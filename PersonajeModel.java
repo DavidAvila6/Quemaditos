@@ -131,7 +131,11 @@ public class PersonajeModel {
             } else if (e.getKeyChar() == 'e') {
                 clientPersonajes.get(index).setAgarraBola(true);
                 imageIcon = new ImageIcon(pikae);
-            } else {
+            } else if (e.getKeyChar() == 'r') {
+                clientPersonajes.get(index).setLanzar(true);
+                imageIcon = new ImageIcon(pikae);
+                System.out.println("Tecla ando");
+            }else {
                 imageIcon = new ImageIcon(pikan);
             }
     
@@ -166,6 +170,9 @@ public class PersonajeModel {
                 serverPersonajes.get(index).setAgarraBola(true);    
                           
                 imageIcon = new ImageIcon(score);
+            }else if (e.getKeyChar() == 'r') {
+                serverPersonajes.get(index).setLanzar(true);
+                imageIcon = new ImageIcon(pikae);
             } else {
                 imageIcon = new ImageIcon(scorn);
             }

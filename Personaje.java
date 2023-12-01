@@ -7,6 +7,7 @@ public class Personaje {
     private Color color;
     private boolean activo;
     private boolean agarraBola;
+    private boolean lanzar;  // Nuevo atributo "lanzar"
     private ImageIcon image;
 
     public Personaje(int x, int y, ImageIcon image, boolean activo) {
@@ -15,6 +16,7 @@ public class Personaje {
         this.image = image;
         this.activo = activo;
         this.agarraBola = false;
+        this.lanzar = false;  // Inicialmente, el personaje no está en estado de lanzar
     }
 
     public int getX() {
@@ -55,5 +57,13 @@ public class Personaje {
 
     public void setAgarraBola(boolean agarraBola) {
         this.agarraBola = agarraBola;
+    }
+
+    public boolean isLanzar() {
+        return lanzar;
+    }
+
+    public void setLanzar(boolean lanzar) {
+        this.lanzar = lanzar;
     }
 }

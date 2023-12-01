@@ -2,8 +2,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Ball {
-    private int x;
-    private int y;
+    private double x;
+    private double y;
     private double speedX;
     private double speedY;
     private int size;
@@ -11,8 +11,9 @@ public class Ball {
     private int maxX;
     private int maxY;
     private boolean agarrada;
+    private double speed;
 
-    public Ball(int x, int y, double speedX, double speedY, int size, Color color, int maxX, int maxY) {
+    public Ball(double x, double y, double speedX, double speedY, int size, Color color, int maxX, int maxY) {
         this.x = x;
         this.y = y;
         this.speedX = speedX;
@@ -22,21 +23,22 @@ public class Ball {
         this.maxX = maxX;
         this.maxY = maxY;
         this.agarrada = false;
+        this.speed = 0.9991;
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY(double y) {
         this.y = y;
     }
 
@@ -88,6 +90,8 @@ public class Ball {
         this.maxY = maxY;
     }
 
+    
+
     public void move() {
         x += speedX;
         y += speedY;
@@ -95,7 +99,7 @@ public class Ball {
 
     public void draw(Graphics g) {
         g.setColor(color);
-        g.fillOval(x, y, size, size);
+        g.fillOval((int)x, (int)y, size, size);
     }
 
     public boolean isAgarrada() {
@@ -104,5 +108,23 @@ public class Ball {
 
     public void setAgarrada(boolean agarrada) {
         this.agarrada = agarrada;
+    }
+
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public void updateSpeed(){
+        System.out.println( speedX+ "INCIIAL");
+        System.out.println( speedY+ "INCIIAL");
+        this.speedX *= speed; 
+        this.speedY *= speed; 
+        System.out.println( speedX+ "FINAL");
+        System.out.println( speedY+ "FINAL");
     }
 }

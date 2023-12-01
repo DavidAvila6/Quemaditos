@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ public class PersonajeModel implements Observer {
     private static List<Observer> observers = new ArrayList<>();
 
     private int currentNumber = 0;
+    private static List<Socket> clientSockets = new ArrayList<>();
 
     private static int controlledClientIndex = 0;
     private static int controlledServerIndex = 0;
@@ -43,12 +45,16 @@ public class PersonajeModel implements Observer {
         return clientPersonajes;
     }
 
-    public int getCurrentNumber() {
-        return currentNumber;
+    public static List<Socket> getClientSockets() {
+        return clientSockets;
     }
 
-    public void setCurrentNumber(int number) {
-        currentNumber = number;
+    public static void addClientSocket(Socket socket) {
+        clientSockets.add(socket);
+    }
+
+    public static void clearClientSockets() {
+        clientSockets.clear();
     }
 
     public static int getXServer(int index) {
@@ -108,8 +114,10 @@ public class PersonajeModel implements Observer {
             } else if (e.getKeyChar() == 'e') {
                 if (clientPersonajes.get(index).getColor() != Color.PINK) {
                     clientPersonajes.get(index).setColor(Color.PINK);
+                    clientPersonajes.get(index).setAgarraBola(true);
                 } else {
                     clientPersonajes.get(index).setColor(Color.BLUE);
+                    clientPersonajes.get(index).setAgarraBola(false);
                 }
             }
 
@@ -134,8 +142,10 @@ public class PersonajeModel implements Observer {
             } else if (e.getKeyChar() == 'e') {
                 if (serverPersonajes.get(index).getColor() != Color.ORANGE) {
                     serverPersonajes.get(index).setColor(Color.ORANGE);
+                    clientPersonajes.get(index).setAgarraBola(true);
                 } else {
                     serverPersonajes.get(index).setColor(Color.RED);
+                    clientPersonajes.get(index).setAgarraBola(false);
                 }
             }
             updateServerPosition(index, xServer, yServer);

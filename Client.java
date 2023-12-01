@@ -4,68 +4,107 @@ import java.awt.event.KeyEvent;
 import java.io.*;
 import java.net.*;
 
-public class Client {
-    public static void main(String[] args) {
-        GameModel model = new GameModel();
-        GameView view = new GameView(model);
+public class Client extends JFrame {
+    private GameModel model;
+    private GameView view;
+    private DataOutputStream serverOutput;
+
+    public Client() {
+        model = new GameModel();
+        view = new GameView(model);
         view.setTitle("Client");
 
-        try {
-            try (Socket socket = new Socket("localhost", 12345)) {
-                DataOutputStream serverOutput = new DataOutputStream(socket.getOutputStream());
-                DataInputStream serverInput = new DataInputStream(socket.getInputStream());
+        JButton connectButton = new JButton("Conectar como Cliente");
+        JButton disconnectButton = new JButton("Desconectar");
 
-                view.addKeyListener(new KeyAdapter() {
-                    @Override
-                    public void keyPressed(KeyEvent e) {
-                        int controlledClientIndex = PersonajeModel.getControlledClientIndex(); // Obtener el índice
-                                                                                               // controlado desde
-                        // el modelo
+        connectButton.addActionListener(e -> connectToServer());
+        disconnectButton.addActionListener(e -> disconnectFromServer());
 
-                        PersonajeModel.moveClientPosition(controlledClientIndex, e);
-                        view.repaint();
+        add(connectButton);
+        add(disconnectButton);
 
-                        try {
-                            serverOutput.writeInt(controlledClientIndex);
-                            serverOutput.writeInt(PersonajeModel.getXClient(controlledClientIndex));
-                            serverOutput.writeInt(PersonajeModel.getYClient(controlledClientIndex));
-                            serverOutput.flush();
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
+        setSize(300, 100);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+
+        view.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                handleKeyPress(e);
+            }
+        });
+
+        disconnectButton.setEnabled(false);
+
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+
+    private void connectToServer() {
+        String ipAddress = JOptionPane.showInputDialog("Ingrese la dirección IP del servidor:");
+        if (ipAddress != null && !ipAddress.isEmpty()) {
+            try {
+                Socket socket = new Socket(ipAddress, 12345);
+                serverOutput = new DataOutputStream(socket.getOutputStream());
+
+                new Thread(() -> {
+                    try {
+                        DataInputStream serverInput = new DataInputStream(socket.getInputStream());
+
+                        while (true) {
+                            handleServerInput(serverInput);
                         }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                });
+                }).start();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-                while (true) {
-                    int controlledServerIndex = serverInput.readInt(); // Recibir el índice controlado
-                    PersonajeModel.setControlledServerIndex(controlledServerIndex); // Actualizar el índice controlado
-                                                                                    // en el
-                                                                                    // modelo
-                    int xServer = serverInput.readInt();
-                    int yServer = serverInput.readInt();
-
-                    PersonajeModel.updateServerPosition(controlledServerIndex, xServer, yServer);
-                    BallModel.updateBalls();
-                    view.repaint();
-
-                    int controlledClientIndex = PersonajeModel.getControlledClientIndex(); // Obtener el índice
-                                                                                           // controlado
-                                                                                           // desde el
-                    // modelo
-                    int xClient = PersonajeModel.getXClient(controlledClientIndex);
-                    int yClient = PersonajeModel.getYClient(controlledClientIndex);
-                    serverOutput.writeInt(controlledClientIndex);
-                    serverOutput.writeInt(xClient);
-                    serverOutput.writeInt(yClient);
-                    serverOutput.flush();
-                }
+    private void disconnectFromServer() {
+        try {
+            if (serverOutput != null) {
+                serverOutput.writeInt(-1); // Valor especial para indicar la desconexión al servidor
+                serverOutput.flush();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-        view.setSize(900, 400);
-        view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        view.setVisible(true);
+    private void handleKeyPress(KeyEvent e) {
+        int controlledClientIndex = PersonajeModel.getControlledClientIndex();
+
+        PersonajeModel.moveClientPosition(controlledClientIndex, e);
+        view.repaint();
+
+        try {
+            serverOutput.writeInt(controlledClientIndex);
+            serverOutput.writeInt(PersonajeModel.getXClient(controlledClientIndex));
+            serverOutput.writeInt(PersonajeModel.getYClient(controlledClientIndex));
+            serverOutput.flush();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void handleServerInput(DataInputStream serverInput) throws IOException {
+        int controlledServerIndex = serverInput.readInt();
+        PersonajeModel.setControlledServerIndex(controlledServerIndex);
+        int xServer = serverInput.readInt();
+        int yServer = serverInput.readInt();
+
+        SwingUtilities.invokeLater(() -> {
+            PersonajeModel.updateServerPosition(controlledServerIndex, xServer, yServer);
+            BallModel.updateBalls();
+            view.repaint();
+        });
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new Client());
     }
 }

@@ -30,7 +30,7 @@ public class GameModel {
                 int x = startingX + col * 100;
                 int y = 50 + row * 130;
                 // Utiliza la ruta de la imagen correspondiente para el cliente
-                PersonajeModel.getClientPersonajes().add(new Personaje(x, y, new ImageIcon("sprites/imagenes.jpeg"), true));
+                PersonajeModel.getClientPersonajes().add(new Personaje(x, y, new ImageIcon("sprites/pika.gif"), true));
             }
         }
     }

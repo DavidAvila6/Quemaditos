@@ -14,7 +14,7 @@ public class BallModel {
 
     public BallModel() {
         balls = new ArrayList<>();
-        balls.add(new Ball(450, 200, 0.5, 0.5, 20, ballImage, 900, 400));
+        balls.add(new Ball(450, 200, -0.5, -0.5, 20, ballImage, 900, 400));
     }
 
     public static void updateBalls() {
@@ -67,24 +67,32 @@ public class BallModel {
                ball.getY() + ball.getSize() > personaje.getY();
     }
 
-    private static void handleCollision(Ball ball, Personaje personaje) {
-        
-        
-        if(ball.getSpeedX()<0.05){
-            
-        }else{
-            eliminado(personaje);
-        }
-        
+    private static void handleCollision(Ball ball, Personaje p) {
+         if (!p.isAgarraBola()){
+                eliminado(p);
+            }else{
+                ball.setX(p.getX());
+                ball.setY(p.getY());
+            }
+         
     }
 
     public static void eliminado(Personaje p){
-    
+        ImageIcon imageIcon;
         if (serverPersonajes.contains(p)) {
-            serverPersonajes.remove(p);
+            if (!p.isAgarraBola()){
+                imageIcon = new ImageIcon("sprites\\pokeball.gif");
+                p.setImage(imageIcon);
+                p.setX(-2000);
+            }
+            
         }  
         if (clientPersonajes.contains(p)) {
-            clientPersonajes.remove(p);
+            if (!p.isAgarraBola()){
+                imageIcon = new ImageIcon("sprites\\pokeball.gif");
+                p.setImage(imageIcon);
+                p.setX(-2000);
+            }
         } 
     }
 

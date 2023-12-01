@@ -21,7 +21,7 @@ public class Client {
                         int controlledClientIndex = PersonajeModel.getControlledClientIndex(); // Obtener el índice
                                                                                                // controlado desde
                         // el modelo
-
+                        boolean agarraBola = PersonajeModel.getagarrabolaClient(controlledClientIndex);
                         PersonajeModel.moveClientPosition(controlledClientIndex, e);
                         view.repaint();
 
@@ -29,6 +29,7 @@ public class Client {
                             serverOutput.writeInt(controlledClientIndex);
                             serverOutput.writeInt(PersonajeModel.getXClient(controlledClientIndex));
                             serverOutput.writeInt(PersonajeModel.getYClient(controlledClientIndex));
+                            serverOutput.writeBoolean(agarraBola);
                             serverOutput.flush();
                         } catch (IOException ex) {
                             ex.printStackTrace();
@@ -43,21 +44,22 @@ public class Client {
                                                                                     // modelo
                     int xServer = serverInput.readInt();
                     int yServer = serverInput.readInt();
+                    boolean agarraServer = serverInput.readBoolean();
+                    PersonajeModel.updateServerPosition(controlledServerIndex, xServer, yServer,agarraServer);
 
-                    PersonajeModel.updateServerPosition(controlledServerIndex, xServer, yServer);
                     BallModel.updateBalls();
                     
                     view.repaint();
 
-                    int controlledClientIndex = PersonajeModel.getControlledClientIndex(); // Obtener el índice
-                                                                                           // controlado
-                                                                                           // desde el
+                    int controlledClientIndex = PersonajeModel.getControlledClientIndex(); // Obtener el índice                                                        // desde el
                     // modelo
                     int xClient = PersonajeModel.getXClient(controlledClientIndex);
                     int yClient = PersonajeModel.getYClient(controlledClientIndex);
+                    boolean agarraBola = PersonajeModel.getagarrabolaClient(controlledClientIndex);
                     serverOutput.writeInt(controlledClientIndex);
                     serverOutput.writeInt(xClient);
                     serverOutput.writeInt(yClient);
+                    serverOutput.writeBoolean(agarraBola);
                     serverOutput.flush();
                 }
             }

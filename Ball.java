@@ -120,11 +120,11 @@ public class Ball {
     }
 
     public void updateSpeed(){
-        System.out.println( speedX+ "INCIIAL");
-        System.out.println( speedY+ "INCIIAL");
+        //System.out.println( speedX+ "INCIIAL");
+        //System.out.println( speedY+ "INCIIAL");
         this.speedX *= speed; 
         this.speedY *= speed; 
-        System.out.println( speedX+ "FINAL");
-        System.out.println( speedY+ "FINAL");
+        //System.out.println( speedX+ "FINAL");
+        //System.out.println( speedY+ "FINAL");
     }
 }

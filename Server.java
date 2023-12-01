@@ -24,6 +24,7 @@ public class Server {
                             int controlledServerIndex = PersonajeModel.getControlledServerIndex(); // Obtener el índice
                                                                                                    // controlado
                             // desde el modelo
+                            boolean agarraBola = PersonajeModel.getagarrabolaServer(controlledServerIndex);
                             PersonajeModel.moveServerPosition(controlledServerIndex, e);
                             view.repaint();
 
@@ -31,6 +32,7 @@ public class Server {
                                 clientOutput.writeInt(controlledServerIndex);
                                 clientOutput.writeInt(PersonajeModel.getXClient(controlledServerIndex));
                                 clientOutput.writeInt(PersonajeModel.getYClient(controlledServerIndex));
+                                clientOutput.writeBoolean(agarraBola);
                                 clientOutput.flush();
                             } catch (IOException ex) {
                                 ex.printStackTrace();
@@ -40,25 +42,27 @@ public class Server {
                     // Índice del personaje controlado por el cliente
 
                     while (true) { // Toda esta parte se envia y se recibe datos del Servidor
-                        int controlledServerIndex = PersonajeModel.getControlledServerIndex();
+                        
                         int controlledClientIndex = clientInput.readInt();
                         PersonajeModel.setControlledClientIndex(controlledClientIndex); // Recibe el índice controlado
                                                                                         // por
                                                                                         // el cliente
                         int xClient = clientInput.readInt();
                         int yClient = clientInput.readInt();
-
-                        PersonajeModel.updateClientPosition(controlledClientIndex, xClient, yClient);
+                        boolean agarraClient = clientInput.readBoolean();   
+                        PersonajeModel.updateClientPosition(controlledClientIndex, xClient, yClient,agarraClient);
                         BallModel.updateBalls();
                         
 
                         view.repaint();
-
+                        int controlledServerIndex = PersonajeModel.getControlledServerIndex();
                         int xServer = PersonajeModel.getXServer(controlledServerIndex);
                         int yServer = PersonajeModel.getYServer(controlledServerIndex);
+                        boolean agarraBola = PersonajeModel.getagarrabolaServer(controlledServerIndex);
                         clientOutput.writeInt(controlledServerIndex);
                         clientOutput.writeInt(xServer);
                         clientOutput.writeInt(yServer);
+                        clientOutput.writeBoolean(agarraBola);
                         clientOutput.flush();
                     }
                 }

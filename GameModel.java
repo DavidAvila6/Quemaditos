@@ -17,7 +17,7 @@ public class GameModel {
                 int x = 50 + col * 100 + separationX;
                 int y = 50 + row * 130;
                 // Utiliza la ruta de la imagen correspondiente para el servidor
-                PersonajeModel.getServerPersonajes().add(new Personaje(x, y, new ImageIcon("sprites/ser.gif"), true));
+                PersonajeModel.getServerPersonajes().add(new Personaje(x, y, new ImageIcon("sprites/scorn.png"), true));
             }
         }
 
@@ -30,7 +30,7 @@ public class GameModel {
                 int x = startingX + col * 100;
                 int y = 50 + row * 130;
                 // Utiliza la ruta de la imagen correspondiente para el cliente
-                PersonajeModel.getClientPersonajes().add(new Personaje(x, y, new ImageIcon("sprites/pika.gif"), true));
+                PersonajeModel.getClientPersonajes().add(new Personaje(x, y, new ImageIcon("sprites/pikan.png"), true));
             }
         }
     }

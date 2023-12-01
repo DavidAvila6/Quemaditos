@@ -75,7 +75,8 @@ public class BallModel {
                 ball.setY(p.getY());
                 if (p.isLanzar()){
                     ball.setSpeedX(-ball.getSpeedX());
-                    ball.setSpeed(0.9991);
+                    ball.setSpeedY(-ball.getSpeedY());
+                    p.setLanzar(false);
                     p.setAgarraBola(false);
                     
                 }
@@ -86,17 +87,13 @@ public class BallModel {
     public static void eliminado(Personaje p){
         ImageIcon imageIcon;
         if (serverPersonajes.contains(p)) {
-            
-                if (!p.isAgarraBola()){
-                    if (!p.isLanzar()){
-                        imageIcon = new ImageIcon("sprites\\pokeball.gif");
-                            p.setImage(imageIcon);
-                            p.setX(-2000);
-                    }else{
-                        p.setLanzar(false);
+            if (!p.isAgarraBola()){
+                imageIcon = new ImageIcon("sprites\\pokeball.gif");
+                p.setImage(imageIcon);
+                p.setX(-2000);
             }
             
-        }}  
+        }  
         if (clientPersonajes.contains(p)) {
             if (!p.isAgarraBola()){
                 imageIcon = new ImageIcon("sprites\\pokeball.gif");

@@ -1,3 +1,5 @@
+package modelos;
+
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
@@ -6,22 +8,21 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
-public class PersonajeModel {
+public class PersonajeModel extends Observable {
     private static List<Personaje> serverPersonajes = new ArrayList<>();
     private static List<Personaje> clientPersonajes = new ArrayList<>();
-    public static String pikarun = "sprites\\pikarun.gif";
-    public static String pikan = "sprites\\pikan.png";
-    public static String pikae = "sprites\\pika.gif";
-    public static String scorun = "sprites\\scorun.gif";
-    public static String scorn = "sprites\\scorn.png";
-    public static String score = "sprites\\score.gif";
+    public static String pikarun = "Quemaditos\\sprites\\pikarun.gif";
+    public static String pikan = "Quemaditos\\sprites\\pikan.png";
+    public static String pikae = "Quemaditos\\sprites\\pika.gif";
+    public static String scorun = "Quemaditos\\sprites\\scorun.gif";
+    public static String scorn = "Quemaditos\\sprites\\scorn.png";
+    public static String score = "Quemaditos\\sprites\\score.gif";
     private int currentNumber = 0;
 
     private static int controlledClientIndex = 0;
     private static int controlledServerIndex = 0;
 
     // Ruta de la imagen del personaje
-
 
     public static List<Personaje> getServerPersonajes() {
         return serverPersonajes;
@@ -38,8 +39,6 @@ public class PersonajeModel {
     public void setCurrentNumber(int number) {
         currentNumber = number;
     }
-    
-    
 
     public static int getXServer(int index) {
         if (index >= 0 && index < serverPersonajes.size()) {
@@ -68,12 +67,14 @@ public class PersonajeModel {
         }
         return -1; // Manejar el caso de índice no válido
     }
+
     public static boolean getagarrabolaClient(int index) {
         if (index >= 0 && index < clientPersonajes.size()) {
             return clientPersonajes.get(index).isAgarraBola();
         }
         return false; // Manejar el caso de índice no válido
     }
+
     public static boolean getagarrabolaServer(int index) {
         if (index >= 0 && index < serverPersonajes.size()) {
             return serverPersonajes.get(index).isAgarraBola();
@@ -81,27 +82,27 @@ public class PersonajeModel {
         return false; // Manejar el caso de índice no válido
     }
 
-    public static void updateServerPosition(int index, int x, int y,boolean agarra) {
+    public static void updateServerPosition(int index, int x, int y, boolean agarra) {
         ImageIcon imageIcon;
         if (index >= 0 && index < serverPersonajes.size()) {
             serverPersonajes.get(index).setX(x);
             serverPersonajes.get(index).setY(y);
             serverPersonajes.get(index).setAgarraBola(agarra);
-            if (agarra){
+            if (agarra) {
                 imageIcon = new ImageIcon(score);
                 serverPersonajes.get(index).setImage(imageIcon);
             }
-            
+
         }
     }
 
-    public static void updateClientPosition(int index, int x, int y,boolean agarra) {
+    public static void updateClientPosition(int index, int x, int y, boolean agarra) {
         ImageIcon imageIcon;
         if (index >= 0 && index < clientPersonajes.size()) {
             clientPersonajes.get(index).setX(x);
             clientPersonajes.get(index).setY(y);
             clientPersonajes.get(index).setAgarraBola(agarra);
-            if (agarra){
+            if (agarra) {
                 imageIcon = new ImageIcon(pikae);
                 clientPersonajes.get(index).setImage(imageIcon);
             }
@@ -112,10 +113,10 @@ public class PersonajeModel {
         if (index >= 0 && index < clientPersonajes.size()) {
             int xClient = clientPersonajes.get(index).getX();
             int yClient = clientPersonajes.get(index).getY();
-    
+
             // Manejar el cambio de imagen fuera de las condiciones de teclas
             ImageIcon imageIcon;
-    
+
             if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                 xClient -= 5;
                 imageIcon = new ImageIcon(pikarun);
@@ -135,17 +136,18 @@ public class PersonajeModel {
                 clientPersonajes.get(index).setLanzar(true);
                 imageIcon = new ImageIcon(pikae);
                 System.out.println("Tecla ando");
-            }else {
+            } else {
                 imageIcon = new ImageIcon(pikan);
             }
-    
+
             clientPersonajes.get(index).setImage(imageIcon);
 
-    
-            updateClientPosition(index, xClient, yClient,clientPersonajes.get(index).isAgarraBola());
+            updateClientPosition(index, xClient, yClient, clientPersonajes.get(index).isAgarraBola());
+            System.out.println("Modelo de personajes actualizado");
+            notifyObservers();
         }
+
     }
-    
 
     public static void moveServerPosition(int index, KeyEvent e) {
         if (index >= 0 && index < serverPersonajes.size()) {
@@ -153,7 +155,7 @@ public class PersonajeModel {
             int yServer = serverPersonajes.get(index).getY();
 
             ImageIcon imageIcon;
-    
+
             if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                 xServer -= 5;
                 imageIcon = new ImageIcon(scorun);
@@ -167,18 +169,18 @@ public class PersonajeModel {
                 yServer += 5;
                 imageIcon = new ImageIcon(scorun);
             } else if (e.getKeyChar() == 'e') {
-                serverPersonajes.get(index).setAgarraBola(true);    
-                          
+                serverPersonajes.get(index).setAgarraBola(true);
+
                 imageIcon = new ImageIcon(score);
-            }else if (e.getKeyChar() == 'r') {
+            } else if (e.getKeyChar() == 'r') {
                 serverPersonajes.get(index).setLanzar(true);
                 imageIcon = new ImageIcon(pikae);
             } else {
                 imageIcon = new ImageIcon(scorn);
             }
-    
+
             serverPersonajes.get(index).setImage(imageIcon);
-            updateServerPosition(index, xServer, yServer,serverPersonajes.get(index).isAgarraBola());
+            updateServerPosition(index, xServer, yServer, serverPersonajes.get(index).isAgarraBola());
         }
     }
 
@@ -198,6 +200,5 @@ public class PersonajeModel {
         controlledServerIndex = index;
 
     }
-    
 
 }

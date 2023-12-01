@@ -1,4 +1,11 @@
+package view;
+
 import javax.swing.*;
+
+import modelos.BallModel;
+import modelos.GameModel;
+import modelos.PersonajeModel;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.*;
@@ -45,13 +52,14 @@ public class Client {
                     int xServer = serverInput.readInt();
                     int yServer = serverInput.readInt();
                     boolean agarraServer = serverInput.readBoolean();
-                    PersonajeModel.updateServerPosition(controlledServerIndex, xServer, yServer,agarraServer);
+                    PersonajeModel.updateServerPosition(controlledServerIndex, xServer, yServer, agarraServer);
 
                     BallModel.updateBalls();
-                    
+
                     view.repaint();
 
-                    int controlledClientIndex = PersonajeModel.getControlledClientIndex(); // Obtener el índice                                                        // desde el
+                    int controlledClientIndex = PersonajeModel.getControlledClientIndex(); // Obtener el índice // desde
+                                                                                           // el
                     // modelo
                     int xClient = PersonajeModel.getXClient(controlledClientIndex);
                     int yClient = PersonajeModel.getYClient(controlledClientIndex);

@@ -1,18 +1,28 @@
+package view;
+
 import javax.swing.*;
+
+import modelos.BallModel;
+import modelos.GameModel;
+import modelos.Observer;
+import modelos.Personaje;
+import modelos.PersonajeModel;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class GameView extends JFrame {
+public class GameView extends JFrame implements Observer {
     private JPanel panel;
     private JLabel numberLabel;
+    private GameModel model;
 
     // Ruta de la imagen de fondo
-    private String backgroundImagePath = "sprites\\fondo2.png";// Cambia el nombre y la extensión según tu imagen
-
-    
+    private String backgroundImagePath = "Quemaditos\\sprites\\fondo2.png";// Cambia el nombre y la extensión según tu
+                                                                           // imagen
 
     public GameView(GameModel model) {
+        model.addObserver(this);
         panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -24,7 +34,7 @@ public class GameView extends JFrame {
 
                 // Dibuja los personajes con imágenes
                 for (Personaje personaje : PersonajeModel.getServerPersonajes()) {
-                   
+
                     drawImage(g, personaje.getImage(), personaje.getX(), personaje.getY());
                 }
                 for (Personaje personaje : PersonajeModel.getClientPersonajes()) {
@@ -52,7 +62,7 @@ public class GameView extends JFrame {
         setSize(900, 450);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-        
+
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -70,5 +80,11 @@ public class GameView extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new GameView(new GameModel()));
+    }
+
+    @Override
+    public void update() {
+        System.out.println("Vista actualizada en respuesta a cambios en el modelo");
+        repaint();
     }
 }

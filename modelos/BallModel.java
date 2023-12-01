@@ -1,16 +1,19 @@
+package modelos;
+
 import javax.swing.*;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BallModel {
+public class BallModel extends Observable {
     private static List<Ball> balls;
     static List<Personaje> serverPersonajes = PersonajeModel.getServerPersonajes();
     static List<Personaje> clientPersonajes = PersonajeModel.getClientPersonajes();
-    
 
     // Imágenes para las bolas
-    private static ImageIcon ballImage = new ImageIcon("sprites/pokeball.gif"); // Cambia la ruta según tu imagen
+    private static ImageIcon ballImage = new ImageIcon("Quemaditos\\sprites\\pokeball.gif"); // Cambia la ruta según tu
+                                                                                             // imagen
 
     public BallModel() {
         balls = new ArrayList<>();
@@ -20,9 +23,9 @@ public class BallModel {
     public static void updateBalls() {
         for (Ball ball : balls) {
             ball.move();
-               
+
             // Detecta los bordes y hace que la bola rebote
-            if (ball.getX() < 0 || ball.getX() > ball.getMaxX() - ball.getSize()) { 
+            if (ball.getX() < 0 || ball.getX() > ball.getMaxX() - ball.getSize()) {
                 ball.updateSpeed();
                 ball.setSpeedX(-ball.getSpeedX());
             }
@@ -35,14 +38,14 @@ public class BallModel {
         }
 
         checkCollisions();
+        notifyObservers();
+        System.out.println("Modelo de bolas actualizado");
     }
 
-
-    //COLISIONES BOLA CON PJ
+    // COLISIONES BOLA CON PJ
 
     public static void checkCollisions() {
         List<Ball> balls = getBalls();
-        
 
         for (Ball ball : balls) {
             for (Personaje personaje : serverPersonajes) {
@@ -62,51 +65,50 @@ public class BallModel {
     private static boolean checkCollision(Ball ball, Personaje personaje) {
         // Verificar si la bola ha colisionado con el rectángulo del personaje
         return ball.getX() < personaje.getX() + 50 &&
-               ball.getX() + ball.getSize() > personaje.getX() &&
-               ball.getY() < personaje.getY() + 50 &&
-               ball.getY() + ball.getSize() > personaje.getY();
+                ball.getX() + ball.getSize() > personaje.getX() &&
+                ball.getY() < personaje.getY() + 50 &&
+                ball.getY() + ball.getSize() > personaje.getY();
     }
 
     private static void handleCollision(Ball ball, Personaje p) {
-         if (!p.isAgarraBola()){
-                eliminado(p);
-            }else{
-                ball.setX(p.getX());
-                ball.setY(p.getY());
-                if (p.isLanzar()){
-                    ball.setSpeedX(-ball.getSpeedX());
-                    ball.setSpeedY(-ball.getSpeedY());
-                    p.setLanzar(false);
-                    p.setAgarraBola(false);
-                    
-                }
+        if (!p.isAgarraBola()) {
+            eliminado(p);
+        } else {
+            ball.setX(p.getX());
+            ball.setY(p.getY());
+            if (p.isLanzar()) {
+                ball.setSpeedX(-ball.getSpeedX());
+                ball.setSpeedY(-ball.getSpeedY());
+                p.setLanzar(false);
+                p.setAgarraBola(false);
+
             }
-         
+        }
+
     }
 
-    public static void eliminado(Personaje p){
+    public static void eliminado(Personaje p) {
         ImageIcon imageIcon;
         if (serverPersonajes.contains(p)) {
-            if (!p.isAgarraBola()){
-                imageIcon = new ImageIcon("sprites\\pokeball.gif");
+            if (!p.isAgarraBola()) {
+                imageIcon = new ImageIcon("Quemaditos\\sprites\\pokeball.gif");
                 p.setImage(imageIcon);
                 p.setX(-2000);
             }
-            
-        }  
+
+        }
         if (clientPersonajes.contains(p)) {
-            if (!p.isAgarraBola()){
-                imageIcon = new ImageIcon("sprites\\pokeball.gif");
+            if (!p.isAgarraBola()) {
+                imageIcon = new ImageIcon("Quemaditos\\sprites\\pokeball.gif");
                 p.setImage(imageIcon);
                 p.setX(-2000);
             }
-        } 
+        }
     }
 
-        //**************** */
+    // **************** */
 
-
-    public void ballAgarrada(){
+    public void ballAgarrada() {
 
     }
 
@@ -122,14 +124,14 @@ public class BallModel {
 
     public int getXBalls(int index) {
         if (index >= 0 && index < balls.size()) {
-            return (int)balls.get(index).getX();
+            return (int) balls.get(index).getX();
         }
         return -1; // Manejar el caso de índice no válido
     }
 
     public int getYballs(int index) {
         if (index >= 0 && index < balls.size()) {
-            return (int)balls.get(index).getY();
+            return (int) balls.get(index).getY();
         }
         return -1; // Manejar el caso de índice no válido
     }

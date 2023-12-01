@@ -1,3 +1,5 @@
+package modelos;
+
 import javax.swing.*;
 import java.awt.Color;
 
@@ -7,7 +9,7 @@ public class Personaje {
     private Color color;
     private boolean activo;
     private boolean agarraBola;
-    private boolean lanzar;  // Nuevo atributo "lanzar"
+    private boolean lanzar; // Nuevo atributo "lanzar"
     private ImageIcon image;
 
     public Personaje(int x, int y, ImageIcon image, boolean activo) {
@@ -16,7 +18,7 @@ public class Personaje {
         this.image = image;
         this.activo = activo;
         this.agarraBola = false;
-        this.lanzar = false;  // Inicialmente, el personaje no está en estado de lanzar
+        this.lanzar = false; // Inicialmente, el personaje no está en estado de lanzar
     }
 
     public int getX() {

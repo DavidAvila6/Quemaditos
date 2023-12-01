@@ -1,3 +1,5 @@
+package modelos;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -90,8 +92,6 @@ public class Ball {
         this.maxY = maxY;
     }
 
-    
-
     public void move() {
         x += speedX;
         y += speedY;
@@ -99,7 +99,7 @@ public class Ball {
 
     public void draw(Graphics g) {
         Image img = image.getImage();
-        g.drawImage(img, (int)x, (int)y, size, size, null);
+        g.drawImage(img, (int) x, (int) y, size, size, null);
     }
 
     public boolean isAgarrada() {
@@ -110,7 +110,6 @@ public class Ball {
         this.agarrada = agarrada;
     }
 
-
     public double getSpeed() {
         return speed;
     }
@@ -119,12 +118,12 @@ public class Ball {
         this.speed = speed;
     }
 
-    public void updateSpeed(){
-        //System.out.println( speedX+ "INCIIAL");
-        //System.out.println( speedY+ "INCIIAL");
-        this.speedX *= speed; 
-        this.speedY *= speed; 
-        //System.out.println( speedX+ "FINAL");
-        //System.out.println( speedY+ "FINAL");
+    public void updateSpeed() {
+        // System.out.println( speedX+ "INCIIAL");
+        // System.out.println( speedY+ "INCIIAL");
+        this.speedX *= speed;
+        this.speedY *= speed;
+        // System.out.println( speedX+ "FINAL");
+        // System.out.println( speedY+ "FINAL");
     }
 }

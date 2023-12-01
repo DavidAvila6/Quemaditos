@@ -1,7 +1,13 @@
+package view;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.*;
 import java.net.*;
+
+import modelos.BallModel;
+import modelos.GameModel;
+import modelos.PersonajeModel;
 
 public class Server {
     public static void main(String[] args) {
@@ -42,17 +48,16 @@ public class Server {
                     // Índice del personaje controlado por el cliente
 
                     while (true) { // Toda esta parte se envia y se recibe datos del Servidor
-                        
+
                         int controlledClientIndex = clientInput.readInt();
                         PersonajeModel.setControlledClientIndex(controlledClientIndex); // Recibe el índice controlado
                                                                                         // por
                                                                                         // el cliente
                         int xClient = clientInput.readInt();
                         int yClient = clientInput.readInt();
-                        boolean agarraClient = clientInput.readBoolean();   
-                        PersonajeModel.updateClientPosition(controlledClientIndex, xClient, yClient,agarraClient);
+                        boolean agarraClient = clientInput.readBoolean();
+                        PersonajeModel.updateClientPosition(controlledClientIndex, xClient, yClient, agarraClient);
                         BallModel.updateBalls();
-                        
 
                         view.repaint();
                         int controlledServerIndex = PersonajeModel.getControlledServerIndex();

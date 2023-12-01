@@ -50,6 +50,7 @@ public class Server {
 
                         PersonajeModel.updateClientPosition(controlledClientIndex, xClient, yClient);
                         BallModel.updateBalls();
+                        
 
                         view.repaint();
 

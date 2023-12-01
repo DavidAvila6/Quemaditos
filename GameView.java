@@ -25,12 +25,10 @@ public class GameView extends JFrame {
                 // Dibuja los personajes con imágenes
                 for (Personaje personaje : PersonajeModel.getServerPersonajes()) {
                    
-                    Image characterImage = new ImageIcon( personaje.charimageS).getImage();
-                    drawImage(g, characterImage, personaje.getX(), personaje.getY());
+                    drawImage(g, personaje.getImage(), personaje.getX(), personaje.getY());
                 }
                 for (Personaje personaje : PersonajeModel.getClientPersonajes()) {
-                    Image characterImage = new ImageIcon(personaje.charimageC).getImage();
-                    drawImage(g, characterImage, personaje.getX(), personaje.getY());
+                    drawImage(g, personaje.getImage(), personaje.getX(), personaje.getY());
                 }
 
                 // Dibuja las bolas
@@ -38,8 +36,9 @@ public class GameView extends JFrame {
             }
 
             // Método auxiliar para dibujar una imagen
-            private void drawImage(Graphics g, Image image, int x, int y) {
-                g.drawImage(image, x, y, 50, 50, this);
+            private void drawImage(Graphics g, ImageIcon image, int x, int y) {
+                Image img = image.getImage();
+                g.drawImage(img, x, y, 50, 50, this);
             }
         };
 

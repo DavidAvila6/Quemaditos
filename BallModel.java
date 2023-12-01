@@ -25,6 +25,50 @@ public class BallModel {
                 ball.setSpeedY(-ball.getSpeedY());
             }
         }
+        checkCollisions();
+    }
+
+
+    //COLISIONES BOLA CON PJ
+
+    public static void checkCollisions() {
+        List<Ball> balls = getBalls();
+        List<Personaje> serverPersonajes = PersonajeModel.getServerPersonajes();
+        List<Personaje> clientPersonajes = PersonajeModel.getClientPersonajes();
+
+        for (Ball ball : balls) {
+            for (Personaje personaje : serverPersonajes) {
+                if (checkCollision(ball, personaje)) {
+                    handleCollision(ball, personaje);
+                }
+            }
+
+            for (Personaje personaje : clientPersonajes) {
+                if (checkCollision(ball, personaje)) {
+                    handleCollision(ball, personaje);
+                }
+            }
+        }
+    }
+
+    private static boolean checkCollision(Ball ball, Personaje personaje) {
+        // Verificar si la bola ha colisionado con el rectángulo del personaje
+        return ball.getX() < personaje.getX() + 50 &&
+               ball.getX() + ball.getSize() > personaje.getX() &&
+               ball.getY() < personaje.getY() + 50 &&
+               ball.getY() + ball.getSize() > personaje.getY();
+    }
+
+    private static void handleCollision(Ball ball, Personaje personaje) {
+        // Lógica para manejar la colisión, por ejemplo, cambiar el color del personaje o hacer algo más
+        //
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    }
+
+        //**************** */
+
+    public static List<Ball> getBalls() {
+        return balls;
     }
 
     public static void drawBalls(Graphics g) {

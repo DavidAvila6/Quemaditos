@@ -46,6 +46,7 @@ public class Client {
 
                     PersonajeModel.updateServerPosition(controlledServerIndex, xServer, yServer);
                     BallModel.updateBalls();
+                    
                     view.repaint();
 
                     int controlledClientIndex = PersonajeModel.getControlledClientIndex(); // Obtener el índice

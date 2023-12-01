@@ -10,6 +10,7 @@ public class Ball {
     private ImageIcon image;
     private int maxX;
     private int maxY;
+    private boolean agarrada;
 
     public Ball(int x, int y, double speedX, double speedY, int size, ImageIcon image, int maxX, int maxY) {
         this.x = x;
@@ -20,6 +21,7 @@ public class Ball {
         this.image = image;
         this.maxX = maxX;
         this.maxY = maxY;
+        this.agarrada = false;
     }
 
     public int getX() {
@@ -94,5 +96,13 @@ public class Ball {
     public void draw(Graphics g) {
         Image img = image.getImage();
         g.drawImage(img, x, y, size, size, null);
+    }
+
+    public boolean isAgarrada() {
+        return agarrada;
+    }
+
+    public void setAgarrada(boolean agarrada) {
+        this.agarrada = agarrada;
     }
 }

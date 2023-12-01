@@ -13,8 +13,6 @@ public class PersonajeModel {
     private static int controlledServerIndex = 0;
 
     // Ruta de la imagen del personaje
-    private String charimageS = "sprites/ser.gif";
-    private String charimageC = "sprites/pika.gif";
 
 
     public static List<Personaje> getServerPersonajes() {
@@ -89,11 +87,7 @@ public class PersonajeModel {
             } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                 yClient += 5;
             } else if (e.getKeyChar() == 'e') {
-                if (clientPersonajes.get(index).getColor() != Color.PINK) {
-                    clientPersonajes.get(index).setColor(Color.PINK);
-                } else {
-                    clientPersonajes.get(index).setColor(Color.BLUE);
-                }
+                
             }
 
             updateClientPosition(index, xClient, yClient);
@@ -114,11 +108,7 @@ public class PersonajeModel {
             } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                 yServer += 5;
             } else if (e.getKeyChar() == 'e') {
-                if (serverPersonajes.get(index).getColor() != Color.ORANGE) {
-                    serverPersonajes.get(index).setColor(Color.ORANGE);
-                } else {
-                    serverPersonajes.get(index).setColor(Color.RED);
-                }
+               
             }
             updateServerPosition(index, xServer, yServer);
         }

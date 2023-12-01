@@ -1,33 +1,44 @@
-import java.awt.*;
+import javax.swing.*;
+import java.awt.Color;
 
 public class Personaje {
     private int x;
     private int y;
     private Color color;
     private boolean activo;
-    public static String charimageS = "sprites/ser.gif";
-    public static String charimageC = "sprites/pika.gif";
+    private boolean agarraBola;
+    private ImageIcon image;
 
-    public Personaje(int x, int y, Color color, boolean activo) {
+    public Personaje(int x, int y, ImageIcon image, boolean activo) {
         this.x = x;
         this.y = y;
-        this.color = color;
-        this.activo = true; // Por defecto, el personaje está activo
+        this.image = image;
+        this.activo = activo;
+        this.agarraBola = false;
     }
 
     public int getX() {
         return x;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
     public int getY() {
         return y;
     }
 
-    public Color getColor() {
-        return color;
+    public void setY(int y) {
+        this.y = y;
     }
-    public void setColor(Color color) {
-        this.color= color;
+
+    public ImageIcon getImage() {
+        return image;
+    }
+
+    public void setImage(ImageIcon image) {
+        this.image = image;
     }
 
     public boolean isActivo() {
@@ -38,11 +49,11 @@ public class Personaje {
         this.activo = activo;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public boolean isAgarraBola() {
+        return agarraBola;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void setAgarraBola(boolean agarraBola) {
+        this.agarraBola = agarraBola;
     }
 }

@@ -3,14 +3,37 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonajeModel {
+public class PersonajeModel implements Observer {
     private static List<Personaje> serverPersonajes = new ArrayList<>();
     private static List<Personaje> clientPersonajes = new ArrayList<>();
+    private static List<Observer> observers = new ArrayList<>();
 
     private int currentNumber = 0;
 
     private static int controlledClientIndex = 0;
     private static int controlledServerIndex = 0;
+
+    public static void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    public static void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update();
+        }
+    }
+
+    public static void agregarPersonaje(Personaje personaje) {
+        // Add the personaje
+        serverPersonajes.add(personaje);
+
+        // Notify observers about the change
+        notifyObservers();
+    }
+
+    public PersonajeModel() {
+        // Constructor público
+    }
 
     public static List<Personaje> getServerPersonajes() {
         return serverPersonajes;
@@ -91,6 +114,7 @@ public class PersonajeModel {
             }
 
             updateClientPosition(index, xClient, yClient);
+            notifyObservers();
         }
     }
 
@@ -115,6 +139,7 @@ public class PersonajeModel {
                 }
             }
             updateServerPosition(index, xServer, yServer);
+            notifyObservers();
         }
     }
 
@@ -132,7 +157,26 @@ public class PersonajeModel {
 
     public static void setControlledServerIndex(int index) {
         controlledServerIndex = index;
-
     }
 
+    @Override
+    public void update() {
+        int controlledClientIndex = PersonajeModel.getControlledClientIndex();
+        int xClient = PersonajeModel.getXClient(controlledClientIndex);
+        int yClient = PersonajeModel.getYClient(controlledClientIndex);
+
+        int controlledServerIndex = PersonajeModel.getControlledServerIndex();
+        int xServer = PersonajeModel.getXServer(controlledServerIndex);
+        int yServer = PersonajeModel.getYServer(controlledServerIndex);
+
+        // Imprimir información del PersonajeModel para cliente
+        System.out.println("Personaje actualizado (Cliente): Index " + controlledClientIndex + ", Posición: (" + xClient
+                + ", " + yClient + ")");
+
+        // Imprimir información del PersonajeModel para servidor
+        System.out.println("Personaje actualizado (Servidor): Index " + controlledServerIndex + ", Posición: ("
+                + xServer + ", " + yServer + ")");
+
+        // Puedes agregar más lógica según tus necesidades
+    }
 }

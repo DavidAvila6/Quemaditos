@@ -1,11 +1,10 @@
 import java.awt.Color;
 
-public class GameModel {
+public class GameModel implements Observer {
     BallModel model = new BallModel();
     PersonajeModel model2 = new PersonajeModel();
 
     public GameModel() {
-
         // Ajusta la separación entre las tablas de personajes
         int separationX = 50;
 
@@ -29,6 +28,14 @@ public class GameModel {
                 PersonajeModel.getClientPersonajes().add(new Personaje(x, y, Color.BLUE, true));
             }
         }
+
+        // Agrega GameModel como observador de PersonajeModel y BallModel
+        PersonajeModel.addObserver(this);
+        BallModel.addObserver(this);
     }
 
+    @Override
+    public void update() {
+        System.out.println("¡El modelo del juego ha sido actualizado!");
+    }
 }

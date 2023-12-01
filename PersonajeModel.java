@@ -1,13 +1,13 @@
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PersonajeModel {
     private static List<Personaje> serverPersonajes = new ArrayList<>();
     private static List<Personaje> clientPersonajes = new ArrayList<>();
-
-    private int currentNumber = 0;
+    private static List<Socket> clientSockets = new ArrayList<>();
 
     private static int controlledClientIndex = 0;
     private static int controlledServerIndex = 0;
@@ -20,12 +20,16 @@ public class PersonajeModel {
         return clientPersonajes;
     }
 
-    public int getCurrentNumber() {
-        return currentNumber;
+    public static List<Socket> getClientSockets() {
+        return clientSockets;
     }
 
-    public void setCurrentNumber(int number) {
-        currentNumber = number;
+    public static void addClientSocket(Socket socket) {
+        clientSockets.add(socket);
+    }
+
+    public static void clearClientSockets() {
+        clientSockets.clear();
     }
 
     public static int getXServer(int index) {
@@ -136,7 +140,5 @@ public class PersonajeModel {
 
     public static void setControlledServerIndex(int index) {
         controlledServerIndex = index;
-
     }
-
 }

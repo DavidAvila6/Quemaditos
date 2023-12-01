@@ -1,12 +1,20 @@
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+
 public class PersonajeModel {
     private static List<Personaje> serverPersonajes = new ArrayList<>();
     private static List<Personaje> clientPersonajes = new ArrayList<>();
-
+    public static String pikarun = "sprites\\pikarun.gif";
+    public static String pikan = "sprites\\pikarn.png";
+    public static String pikae = "sprites\\pika.gif";
+    public static String scorun = "sprites\\scorun.gif";
+    public static String scorn = "sprites\\scorn.png";
+    public static String score = "sprites\\score.gif";
     private int currentNumber = 0;
 
     private static int controlledClientIndex = 0;
@@ -78,38 +86,61 @@ public class PersonajeModel {
         if (index >= 0 && index < clientPersonajes.size()) {
             int xClient = clientPersonajes.get(index).getX();
             int yClient = clientPersonajes.get(index).getY();
+    
+            // Manejar el cambio de imagen fuera de las condiciones de teclas
+            ImageIcon imageIcon;
+    
             if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                 xClient -= 5;
+                imageIcon = new ImageIcon(pikarun);
             } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                 xClient += 5;
+                imageIcon = new ImageIcon(pikarun);
             } else if (e.getKeyCode() == KeyEvent.VK_UP) {
                 yClient -= 5;
+                imageIcon = new ImageIcon(pikarun);
             } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                 yClient += 5;
+                imageIcon = new ImageIcon(pikarun);
             } else if (e.getKeyChar() == 'e') {
-                
+                imageIcon = new ImageIcon(pikae);
+            } else {
+                imageIcon = new ImageIcon(pikan);
             }
-
+    
+            clientPersonajes.get(index).setImage(imageIcon);
+    
             updateClientPosition(index, xClient, yClient);
         }
     }
+    
 
     public static void moveServerPosition(int index, KeyEvent e) {
         if (index >= 0 && index < serverPersonajes.size()) {
             int xServer = serverPersonajes.get(index).getX();
             int yServer = serverPersonajes.get(index).getY();
 
+            ImageIcon imageIcon;
+    
             if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                 xServer -= 5;
+                imageIcon = new ImageIcon(scorun);
             } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                 xServer += 5;
+                imageIcon = new ImageIcon(scorun);
             } else if (e.getKeyCode() == KeyEvent.VK_UP) {
                 yServer -= 5;
+                imageIcon = new ImageIcon(scorun);
             } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                 yServer += 5;
+                imageIcon = new ImageIcon(scorun);
             } else if (e.getKeyChar() == 'e') {
-               
+                imageIcon = new ImageIcon(score);
+            } else {
+                imageIcon = new ImageIcon(scorn);
             }
+    
+            serverPersonajes.get(index).setImage(imageIcon);
             updateServerPosition(index, xServer, yServer);
         }
     }

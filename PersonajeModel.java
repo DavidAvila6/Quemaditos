@@ -10,7 +10,7 @@ public class PersonajeModel {
     private static List<Personaje> serverPersonajes = new ArrayList<>();
     private static List<Personaje> clientPersonajes = new ArrayList<>();
     public static String pikarun = "sprites\\pikarun.gif";
-    public static String pikan = "sprites\\pikarn.png";
+    public static String pikan = "sprites\\pikan.png";
     public static String pikae = "sprites\\pika.gif";
     public static String scorun = "sprites\\scorun.gif";
     public static String scorn = "sprites\\scorn.png";
@@ -82,18 +82,29 @@ public class PersonajeModel {
     }
 
     public static void updateServerPosition(int index, int x, int y,boolean agarra) {
+        ImageIcon imageIcon;
         if (index >= 0 && index < serverPersonajes.size()) {
             serverPersonajes.get(index).setX(x);
             serverPersonajes.get(index).setY(y);
             serverPersonajes.get(index).setAgarraBola(agarra);
+            if (agarra){
+                imageIcon = new ImageIcon(score);
+                serverPersonajes.get(index).setImage(imageIcon);
+            }
+            
         }
     }
 
     public static void updateClientPosition(int index, int x, int y,boolean agarra) {
+        ImageIcon imageIcon;
         if (index >= 0 && index < clientPersonajes.size()) {
             clientPersonajes.get(index).setX(x);
             clientPersonajes.get(index).setY(y);
             clientPersonajes.get(index).setAgarraBola(agarra);
+            if (agarra){
+                imageIcon = new ImageIcon(pikae);
+                clientPersonajes.get(index).setImage(imageIcon);
+            }
         }
     }
 
@@ -125,6 +136,7 @@ public class PersonajeModel {
             }
     
             clientPersonajes.get(index).setImage(imageIcon);
+
     
             updateClientPosition(index, xClient, yClient,clientPersonajes.get(index).isAgarraBola());
         }

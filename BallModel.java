@@ -5,6 +5,7 @@ import java.util.List;
 
 public class BallModel {
     private static List<Ball> balls;
+    
 
     // Imágenes para las bolas
     private static ImageIcon ballImage = new ImageIcon("sprites/pokeball.gif"); // Cambia la ruta según tu imagen
@@ -66,9 +67,26 @@ public class BallModel {
     }
 
     private static void handleCollision(Ball ball, Personaje personaje) {
+        
         // Lógica para manejar la colisión, por ejemplo, cambiar el color del personaje o hacer algo más
         //
+        if(ball.getSpeedX()<0.05){
+            
+        }else{
+            eliminado(personaje);
+        }
         System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    }
+
+    public static void eliminado(Personaje p){
+    List<Personaje> serverPersonajes = PersonajeModel.getServerPersonajes();
+    List<Personaje> clientPersonajes = PersonajeModel.getClientPersonajes();
+        if (serverPersonajes.contains(p)) {
+            serverPersonajes.remove(p);
+        }  
+        if (clientPersonajes.contains(p)) {
+            clientPersonajes.remove(p);
+        } 
     }
 
         //**************** */

@@ -14,6 +14,7 @@ public class PersonajeModel {
 
     // Ruta de la imagen del personaje
 
+    
 
     public static List<Personaje> getServerPersonajes() {
         return serverPersonajes;
